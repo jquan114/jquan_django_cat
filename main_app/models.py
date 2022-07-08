@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from datetime import date
+from django .contrib.auth.models import User 
 
 # A tuple of 2-tuples
 MEALS = (
@@ -27,6 +28,8 @@ class Cat(models.Model):
   age = models.IntegerField()
   #Add M:M relationship
   toys = models.ManyToManyField(Toy)
+  #Add the foreign key relationship linking to a user instance
+  user = models.ForeignKey(User,on_delete=models.CASCADE)
 
   def fed_for_today(self):
     return self.feeding_set.filter(date=date.today()).count() >= len(MEALS)
